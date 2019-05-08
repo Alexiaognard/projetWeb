@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenue sur fruitCoop</title>
+
+      <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+
+
+</head>
+<body>
+    <nav class="nav-extended">
+        <div class="nav-wrapper teal">
+            <a href="{% url 'homepage' %}" class="brand-logo center">fruitCoop</a>
+            <a href="#" data-target="mobile-demo" class="waves-effect waves-light sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="tooltipped" data-position="right" data-tooltip="Connexion"><i class="material-icons">person_outline</i></a></li>
+                {% if user.is_authenticated %}
+                <li><a class="tooltipped" data-position="left" data-tooltip="Mon Compte" ><i class="material-icons">account_circle</i></a></li>
+                <li><a class="tooltipped" data-position="left" data-tooltip="Deconnexion" ><i class="material-icons">exit_to_app</i></a></li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </nav>
+
+</body>
+</html>
