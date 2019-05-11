@@ -1,15 +1,18 @@
 {% extends 'index.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-
+{% block content %}
 <body>
-    <div>
-        <h5>Petit test très tcahtcheur</h5>
-        <a class="waves-effect waves-light btn-large">Button</a>
+    <div class="block center">
+        <h5>Que voulez vous faire ? </h5>
+        <div class="col s12 m5">
+            <a class="waves-effect waves-light btn-large green darken-3">Mon local</a>
+            <a href="{% url 'myaccount' %}" class="waves-effect waves-light btn-large green darken-3">Mes infos</a>
+        </div>
+        <div class="col s12 m5">
+        <a class="waves-effect waves-light btn-large green darken-3">Mon planning</a>
+        <a class="waves-effect waves-light btn-large green darken-3">Mes exportations</a>
+        </div>
     </div>
 
 </body>
-</html>
+{% endblock %}

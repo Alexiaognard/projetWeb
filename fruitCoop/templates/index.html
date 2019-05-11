@@ -16,14 +16,16 @@
 </head>
 <body>
     <nav class="nav-extended">
-        <div class="nav-wrapper orange">
+        <div class="nav-wrapper amber">
             <a href="{% url 'homepage' %}" class="brand-logo center">fruitCoop</a>
             <a href="#" data-target="mobile-demo" class="waves-effect waves-light sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a class="tooltipped" data-position="left" data-tooltip="Mon Compte" ><i class="material-icons">account_circle</i></a></li>
-                <li><a class="tooltipped" data-position="left" data-tooltip="Deconnexion" ><i class="material-icons">exit_to_app</i></a></li>
-                <li><a class="tooltipped" data-position="right" data-tooltip="Connexion"><i class="material-icons">person_outline</i></a></li>
-
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'myaccount' %}" class="tooltipped" data-position="left" data-tooltip="Mon Compte" ><i class="material-icons">account_circle</i></a></li>
+                <li><a href="{% url 'logout' %}" class="tooltipped" data-position="left" data-tooltip="Deconnexion" ><i class="material-icons">exit_to_app</i></a></li>
+                {% else %}
+                <li><a href="{% url 'signinProducteur' %}"class="tooltipped" data-position="right" data-tooltip="Connexion"><i class="material-icons">person_outline</i></a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -35,7 +37,7 @@
 {% endblock %}
 
 
-    <footer class="page-footer orange">
+    <footer class="page-footer amber">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">

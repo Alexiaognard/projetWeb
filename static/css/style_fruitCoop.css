@@ -7,3 +7,55 @@
   main {
     flex: 1 0 auto;
   }
+
+  .formulaire {
+  justify-content:center;
+  display: flex;
+  border-radius : 50px;
+  border-color : black;
+  border-width : 5px;
+}
+
+.blocCentrer {
+  position: center;
+  border: 5px double;
+  border-color: #CEC8E0;
+  padding: 50px;
+  border-radius : 50px;
+}
+
+.boutonForm {
+  display : flex;
+  position : center;
+  justify-content:center;
+}
+
+.validerBouton{
+  padding:15px;
+  font-size : 16px;
+  font-weight : bold;
+  background: #C088FF;
+  border-color: #514261 #3C3445 #1A181C;
+  display : flex;
+  position : center;
+  justify-content:center;
+
+}
+.titreForm {
+  color : purple;
+  font-size : 13 px;
+  font-weight : bold;
+
+}
+
+
+.case {
+  position: center;
+  border: 2px ridge;
+  border-color: #DFC5FC;
+  padding: 25px;
+  padding-top:7px;
+  padding-bottom: 7px;
+  margin : 40px;
+  margin-top:0px;
+  border-radius : 25px;
