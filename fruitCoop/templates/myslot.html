@@ -2,6 +2,7 @@
 
 
 {% block content %}
+
 <table>
     <thead>
     <tr>
@@ -9,6 +10,7 @@
         <th>Date de fin</th>
         <th>Fruit</th>
         <th>Nombre de Palette</th>
+        <th>Action</th>
     </tr>
     </thead>
 
@@ -19,6 +21,7 @@
         <td>{{ export.enddateslot }}</td>
         <td>{{ export.fruitexport }}</td>
         <td>{{ export.nbpalletexport }}</td>
+        <td><a href="#"class="waves-effect btn-floating green"><i class="material-icons">create</i></a></td>
     </tr>
     {% endfor %}
     </tbody>

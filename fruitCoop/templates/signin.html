@@ -1,25 +1,26 @@
 {% extends 'index.html' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Ajout d'un créneau horaire{% endblock %}
 {% block content %}
 
-<div class="page">
+<div class="row">
   <div class = "formulaire">
     <div class="blocCentrer">
       <form method="post" action="">
       {% csrf_token %}
       {% for field in form %}
           <div>
-          {{ field.label_tag }}<br>
+          {{ field.label_tag }}
           {{ field }}
           </div>
       {% endfor %}
       <div class="boutonForm">
-        <button class="btn green darken-3" type="submit">Connexion</button>
+        <button class="btn green darken-3" type="submit">Ajouter</button>
       </div>
       </form>
     </div>
   </div>
+
 </div>
 
 {% endblock %}

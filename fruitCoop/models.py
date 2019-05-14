@@ -85,5 +85,13 @@ class Affecter(models.Model):
         db_table = 'affecter'
         unique_together = ('numroom', 'nummember')
 
+class Exporter(models.Model):
+    numexport = models.ForeignKey(Export, on_delete=models.CASCADE, db_column='numexport')
+    nummember = models.ForeignKey(Member, on_delete=models.CASCADE, db_column='nummember')
+
+    class Meta:
+        db_table = 'affecter'
+        unique_together = ('numexport', 'nummember')
+
 
 

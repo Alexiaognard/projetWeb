@@ -2,14 +2,29 @@
 
 {% block content %}
 <body>
-    <div class="block center">
-        <h5>Veuillez vous connecter afin d'accéder à votre espace</h5>
-        <div class="col s12 m5">
-            <a href="{% url 'login' %}" class="waves-effect waves-light btn-large green darken-3">Me connecter</a>
 
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card yellow lighten-4">
+        <div class="card-content dark-text">
+          <p>Si vous possédez déjà un compte fruitCoop, veuillez vous connecter afin d'accéder à votre espace.</p>
         </div>
-
+        <div class="card-action" style = "text-align:center">
+          <a href="{% url 'login' %}"  class="waves-effect waves-light btn-large green darken-3">Me connecter</a>
+        </div>
+      </div>
     </div>
+      <div class="col s12 m6">
+      <div class="card yellow lighten-4">
+        <div class="card-content dark-text">
+          <p>Si vous ne possédez pas de compte fruitCoop, veuillez vous créer un compte.</p>
+        </div>
+        <div class="card-action" style = "text-align:center">
+          <a href="{% url 'signupProducteur' %}" class="waves-effect waves-light btn-large green darken-3">M'inscrire</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 {% endblock %}

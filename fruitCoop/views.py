@@ -54,6 +54,7 @@ def signup_producteur(request):
             Utilisateur = User.objects.get(username=username)
             producteur = Member(nummember=Utilisateur, birthdaydatemember=form.cleaned_data.get('datenaissanceproducteur'), telephonemember=form.cleaned_data.get('telephoneproducteur'), postalcodemember=form.cleaned_data.get('codepostalproducteur'), citymember=form.cleaned_data.get('villeproducteur'), address1member=form.cleaned_data.get('adresse1producteur'), address2member=form.cleaned_data.get('adresse2producteur'), nummember_id=Utilisateur.id)
             producteur.save()  # Sauvegarde du client
+            local = Affecter(nummember=Utilisateur)
             login(request, user) #Connexion au site
             estProducteur = True
             request.session['estProducteur'] = estProducteur  # On mémorise le fait que c'est un producteur en session
@@ -66,24 +67,37 @@ def signup_producteur(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+
+#---------------- VIEWS DE LECTURE  ----------------
+
+
 @login_required
 def read_myexport(request):
-    utilisateur = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=utilisateur)
-    exports = Export.objects.filter(nummember=member).order_by('dateexport') #Résultat ordonné
+    user = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=user)
+    exports = Exporter.objects.filter(nummember=member) #Résultat ordonné
     return render(request, 'myexport.html', locals())
 
 @login_required
 def read_myslot(request):
-    utilisateur = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=utilisateur)
+    user = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=user)
     slots = Member.objects.filter(nummember=member).order_by(
         'begindateslot')  # Résultat ordonné
     return render(request, 'myslot.html', locals())
 
 @login_required
 def read_myroom(request):
-    utilisateur = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=utilisateur)
+    user = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=user)
     room = Affecter.objects.filter(nummember=member)
     return render(request, 'myroom.html', locals())
+
+@login_required
+def read_memberbyroom(request):
+    user = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=user)
+    room = Affecter.objects.filter(nummember=member)
+    numroom = Room.objects.filter(numroom=room)
+    listMember = Affecter.objects.filter(numroom=numroom)
+    return render(request, 'read_memberbyroom.html', locals())

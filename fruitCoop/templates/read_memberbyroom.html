@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div>
+    <div class="collection with-header">
+        <div class="collection-header"><h4>Les producteurs de mon local</h4></div>
+    {% for productor in listeMember %}
+    <div class="collection-item">
+
+        <a><h5>{{ productor.nummember.last_name }}</h5></a>
+        <a>{{ productor.nummember.first_name }}</a>
+        <a>{{ productor.nummember.telephonemember }}</a>
+
+    </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

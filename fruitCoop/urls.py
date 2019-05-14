@@ -11,7 +11,8 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
     path('myexport', views.read_myexport, name='myexport'),
     path('myslot', views.read_myslot, name='myslot'),
-    path('myroom',views.read_myroom, name='myroom')
+    path('myroom',views.read_myroom, name='myroom'),
+    path('read_memberbyroom', views.read_memberbyroom, name='read_memberbyroom')
 
 
 ]

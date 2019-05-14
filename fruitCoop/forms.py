@@ -17,8 +17,9 @@ class SignUpFormMember(UserCreationForm):
     villeproducteur= forms.CharField(label="Ville")
     adresse1producteur = forms.CharField(label="Adresse1")
     adresse2producteur = forms.CharField(label="Adresse2 (Mettre un espace si le champs est vide)")
+    localproducteur = forms.CharField(label="Votre local")
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'datenaissanceproducteur', 'email', 'telephoneproducteur',
-                      'codepostalproducteur', 'villeproducteur', 'adresse1producteur', 'adresse2producteur', 'password1', 'password2')
+                      'codepostalproducteur', 'villeproducteur', 'adresse1producteur', 'adresse2producteur', 'password1', 'password2','localproducteur')
 
