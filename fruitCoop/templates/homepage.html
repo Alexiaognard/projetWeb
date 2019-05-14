@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<body>
+    <div class="block center">
+        <h5>Veuillez vous connecter afin d'accéder à votre espace</h5>
+        <div class="col s12 m5">
+            <a href="{% url 'login' %}" class="waves-effect waves-light btn-large green darken-3">Me connecter</a>
+
+        </div>
+
+    </div>
+
+</body>
+{% endblock %}

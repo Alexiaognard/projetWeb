@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Fruit</th>
+        <th>Calibre</th>
+        <th>Nombre de Palette</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for export in exports %}
+    <tr>
+        <td>{{ export.dateexport }}</td>
+        <td>{{ export.fruitexport }}</td>
+        <td>{{ export.sizeexport }}</td>
+        <td>{{ export.nbpalletexport }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

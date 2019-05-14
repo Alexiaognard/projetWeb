@@ -8,81 +8,82 @@ BOOLEAN_CHOICES = (
     (False,'Non'),
 )
 
-class Producteur(models.Model):
-    numproducteur = models.OneToOneField(User, on_delete=models.CASCADE)
-    datenaissanceproducteur = models.DateField()
-    telephoneproducteur = models.CharField(blank=False, max_length=15)
-    codepostalproducteur = models.IntegerField(blank=False)
-    villeproducteur = models.CharField(blank=False, max_length=30)
-    adresse1producteur = models.CharField(blank=False, max_length=40)
-    adresse2producteur = models.CharField(blank=True, max_length=40)
+class Member(models.Model):
+    nummember = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    birthdaydatemember = models.DateField()
+    telephonemember = models.CharField(blank=False, max_length=15)
+    postalcodemember = models.IntegerField(blank=False)
+    citymember = models.CharField(blank=False, max_length=30)
+    address1member = models.CharField(blank=False, max_length=40)
+    address2member = models.CharField(blank=True, max_length=40)
     class Meta:
-        db_table = 'producteur'
+        db_table = 'member'
 
 
-class Local(models.Model):
-    numlocal = models.IntegerField(primary_key=True)
-    codepostallocal = models.IntegerField(blank=False)
-    villelocal = models.CharField(blank=False, max_length=30)
-    adresse1local = models.CharField(blank=False, max_length=40)
-    adresse2local = models.CharField(blank=True, max_length=40)
-    capacitelocal = models.IntegerField(blank=False)
-    responsable = models.ForeignKey(Producteur, on_delete=models.CASCADE)
+class Room(models.Model):
+    numroom = models.IntegerField(primary_key=True)
+    postalcoderoom = models.IntegerField(blank=False)
+    cityroom = models.CharField(blank=False, max_length=30)
+    address1room = models.CharField(blank=False, max_length=40)
+    address2room = models.CharField(blank=True, max_length=40)
+    capacityroom = models.IntegerField(blank=False)
+    responsible = models.ForeignKey(Member, on_delete=models.CASCADE)
     class Meta:
-        db_table = 'local'
+        db_table = 'room'
 
 
 
-class Exportation(models.Model):
-    numexportation = models.IntegerField(primary_key=True)
-    nbpaletteexportation = models.IntegerField(blank=False)
-    fruitexportation = models.CharField(max_length=20)
-    calibreexportation = models.IntegerField(blank=False)
+class Export(models.Model):
+    numexport = models.IntegerField(primary_key=True)
+    dateexport = models.DateField()
+    fruitexport = models.CharField(max_length=20)
+    sizeexport = models.IntegerField(blank=False)
+    nbpalletexport = models.IntegerField(blank=False)
     class Meta:
-        db_table = 'exportation'
+        db_table = 'export'
 
 
-class CreneauHoraire(models.Model):
-    numcreneau = models.IntegerField(primary_key=True)
-    datedebutcreneau = models.DateTimeField('date debut')
-    datefincreneau = models.DateTimeField('date fin')
-    nbpalettecreneau = models.IntegerField(blank=False)
-    fruitcreneau = models.CharField(max_length=20)
+class Slot(models.Model):
+    numslot = models.IntegerField(primary_key=True)
+    begindateslot = models.DateTimeField('date debut')
+    enddateslot = models.DateTimeField('date fin')
+    nbpalletslot = models.IntegerField(blank=False)
+    fruitslot = models.CharField(max_length=20)
     class Meta:
-        db_table = 'creneau'
+        db_table = 'slot'
 
 
-
-class FicheExport(models.Model):
-    numfiche = models.IntegerField(primary_key=True)
-    nbfruitfiche = models.IntegerField(blank=False)
-    fruitfiche = models.CharField(max_length=20)
-    brixfiche = models.IntegerField(blank=False)
-    parcellefiche = models.CharField(max_length=10)
-    maturitefruitfiche = models.CharField(max_length=5)
-    numexportation = models.ForeignKey(Exportation, on_delete=models.CASCADE)
-    numproducteur = models.ForeignKey(Producteur, on_delete=models.CASCADE)
+class Exportform(models.Model):
+    numform = models.IntegerField(primary_key=True)
+    nbfruitform = models.IntegerField(blank=False)
+    fruitform = models.CharField(max_length=20)
+    brixform = models.IntegerField(blank=False)
+    parcelleform = models.CharField(max_length=10)
+    maturityform = models.CharField(max_length=5)
+    numexport = models.ForeignKey(Export, on_delete=models.CASCADE)
+    nummember = models.ForeignKey(Member, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'fiche'
+        db_table = 'exportform'
 
 
 class Coliser(models.Model):
-    numlocal = models.ForeignKey(Local, on_delete=models.CASCADE, db_column='numlocal')
-    numexportation = models.ForeignKey(Exportation, on_delete=models.CASCADE, db_column='numexportation')
+    numroom = models.ForeignKey(Room, on_delete=models.CASCADE, db_column='numroom')
+    numexport = models.ForeignKey(Export, on_delete=models.CASCADE, db_column='numexport')
     datecoliser = models.DateTimeField()
 
     class Meta:
         db_table = 'coliser'
-        unique_together = ('numlocal', 'numexportation')
+        unique_together = ('numroom', 'numexport')
 
 class Affecter(models.Model):
-    numlocal = models.ForeignKey(Local, on_delete=models.CASCADE, db_column='numlocal')
-    numproducteur = models.ForeignKey(Exportation, on_delete=models.CASCADE, db_column='numproducteur')
-    isResponsable = models.BooleanField(choices=BOOLEAN_CHOICES)
+    numroom = models.ForeignKey(Room, on_delete=models.CASCADE, db_column='numroom')
+    nummember = models.ForeignKey(Member, on_delete=models.CASCADE, db_column='nummember')
+    isResponsible = models.BooleanField(choices=BOOLEAN_CHOICES)
 
     class Meta:
         db_table = 'affecter'
-        unique_together = ('numlocal', 'numproducteur')
+        unique_together = ('numroom', 'nummember')
+
 
 

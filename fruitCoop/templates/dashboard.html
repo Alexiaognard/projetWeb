@@ -5,12 +5,12 @@
     <div class="block center">
         <h5>Que voulez vous faire ? </h5>
         <div class="col s12 m5">
-            <a class="waves-effect waves-light btn-large green darken-3">Mon local</a>
+            <a href="{% url 'myroom' %}" class="waves-effect waves-light btn-large green darken-3">Mon local</a>
             <a href="{% url 'myaccount' %}" class="waves-effect waves-light btn-large green darken-3">Mes infos</a>
         </div>
         <div class="col s12 m5">
-        <a class="waves-effect waves-light btn-large green darken-3">Mon planning</a>
-        <a class="waves-effect waves-light btn-large green darken-3">Mes exportations</a>
+        <a href="{% url 'myslot' %}" class="waves-effect waves-light btn-large green darken-3">Mes créneaux horaires</a>
+        <a href="{% url 'myexport' %}" class="waves-effect waves-light btn-large green darken-3">Mes exportations</a>
         </div>
     </div>
 
