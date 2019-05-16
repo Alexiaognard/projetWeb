@@ -44,7 +44,6 @@ class UpdateMemberForm(forms.Form):
     first_name = forms.CharField(label = "Prénom")
     last_name = forms.CharField(label = "Nom")
     email = forms.EmailField(label = "Adresse électronique")
-    datenaissanceproducteur = forms.DateField(label="Date de naissance",widget=forms.SelectDateWidget(years=range(1900, 2100)))
     telephoneproducteur = forms.CharField(label="Numéro de téléphone")
     codepostalproducteur = forms.IntegerField(label="Code postal")
     villeproducteur = forms.CharField(label="Ville")
@@ -52,6 +51,6 @@ class UpdateMemberForm(forms.Form):
     adresse2producteur = forms.CharField(label="Adresse2")
 
 class addRoomForm(forms.Form):
-    choice_room = RoomChoiceField(queryset=Room.objects.all(), to_field_name='nameroom', label="Local")
+    choice_room = RoomChoiceField(queryset=Room.objects.all(), to_field_name='numroom', label="Local")
 
 

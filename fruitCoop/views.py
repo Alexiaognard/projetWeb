@@ -15,25 +15,22 @@ def dashboard(request):
 
 @login_required
 def addroom(request):
-    username = User.objects.get(id=request.user.id)
-    user = Member.objects.get(nummember=username)
+    utilisateur = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=utilisateur)
     if request.method == 'POST':
         form = addRoomForm(request.POST)
         if form.is_valid():
-            room=form.cleaned_data.get('choice_room')
-            myroom=Room.objects.get(nameroom='room')
-            appartient=Appartenir(nummember=user.nummember, numroom=myroom.numroom)
+            appartient=Appartenir(nummember=member, numroom=form.cleaned_data.get('choice_room'))
             appartient.save()
-            if user:
-                login(request,user)
 
-                return redirect('dashboard')
-            else:
-                error=True
-                #ErrorMessage = "Username ou mot de passe incorrect"
+            return render(request, 'dashboard.html')
+        print('form pas valide')
     else:
-        form= SignInForm()
-    return render (request, 'addroom.html', locals())
+        print('méthode pas valide')
+        form= addRoomForm()
+    return render(request, 'addroom.html', {'formAddRoom' : form})
+
+
 
 
 
@@ -105,6 +102,7 @@ def signup_producteur(request):
 def read_myaccount(request):
     utilisateur = User.objects.get(id=request.user.id)
     member = Member.objects.get(nummember=utilisateur)
+    room=Appartenir.objects.get(nummember=member)
     return render(request, 'myaccount.html',locals())
 
 
@@ -112,7 +110,7 @@ def read_myaccount(request):
 def read_myexport(request):
     user = User.objects.get(id=request.user.id)
     member = Member.objects.get(nummember=user)
-    exports = Exporter.objects.filter(nummember=member) #Résultat ordonné
+    exports = Exporter.objects.filter(nummember=member)
     return render(request, 'myexport.html', locals())
 
 @login_required
@@ -122,17 +120,34 @@ def read_myslot(request):
     slots = Member.objects.filter(nummember=member).order_by(
         'begindateslot')  # Résultat ordonné
     return render(request, 'myslot.html', locals())
+@login_required
+def read_myroom(request):
+    user = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=user)
+    room = Appartenir.objects.filter(nummember=member)
+    return render(request, 'read_myroom.html', locals())
 
 @login_required
 def read_rooms(request):
-
-    room=Room.objects.filter(nameroom=nameroom)
-    return render(request, 'readroom.html', locals())
+    room=Room.objects.all()
+    listRoom=[]
+    for rooms in room:
+        listRoom.append(rooms)
+        print(listRoom)
+    return render(request, 'readrooms.html', locals())
 
 @login_required
-def read_memberbyroom(request, nameroom):
-    numroom = Room.objects.filter(nameroom=nameroom)
-    listMember = Appartenir.objects.filter(numroom=numroom)
+def read_memberbyroom(request):
+    user = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=user)
+    room = Appartenir.objects.get(nummember=member)
+    prod = Appartenir.objects.filter(numroom=room.numroom.numroom)
+    listMember = []
+    for mem in prod:
+        utilisateur=User.objects.get(id=mem.nummember.nummember.id)
+        membre=Member.objects.get(nummember=utilisateur)
+        listMember.append(mem.nummember)
+
     return render(request, 'read_memberbyroom.html', locals())
 
 
@@ -142,6 +157,7 @@ def read_memberbyroom(request, nameroom):
 def update_member(request):
     user = User.objects.get(id=request.user.id)
     member = Member.objects.get(nummember=request.user.id)
+    form=UpdateMemberForm()
     if request.method == "POST":
         form = UpdateMemberForm(request.POST)
         if form.is_valid():
@@ -149,7 +165,6 @@ def update_member(request):
             user.last_name = form.cleaned_data.get('last_name')
             user.email = form.cleaned_data.get('email')
             user.save()
-            member.birthdaydatemember = form.cleaned_data.get('datenaissanceproducteur')
             member.telephonemember = form.cleaned_data.get('telephoneproducteur')
             member.postalcodemember = form.cleaned_data.get('codepostalproducteur')
             member.citymember = form.cleaned_data.get('villeproducteur')
@@ -157,10 +172,8 @@ def update_member(request):
             member.address2member = form.cleaned_data.get('adresse2producteur')
             member.save()
             return read_myaccount(request)
-        else:
-            date = str(member.birthdaydatemember.year)+"-"+str(member.birthdaydatemember.month)+"-"+str(member.birthdaydatemember.day) #Permet d'avoir le bon format de date pour le input : type=date , du formulaire
-            member.birthdaydatemember = date
-    return render(request, 'updatemember.html', locals())
+
+    return render(request, 'updatemember.html')
 
 
 

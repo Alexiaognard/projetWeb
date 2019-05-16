@@ -5,12 +5,12 @@
 <div>
     <div class="collection with-header">
         <div class="collection-header"><h4>Les producteurs de mon local</h4></div>
-    {% for productor in listeMember %}
+    {% for productor in listMember %}
     <div class="collection-item">
-
-        <a><h5>{{ productor.nummember.last_name }}</h5></a>
-        <a>{{ productor.nummember.first_name }}</a>
-        <a>{{ productor.nummember.telephonemember }}</a>
+        <ul>
+            <li><a>{{ productor.lastnamemember }}  {{ productor.firstnamemember }}</a></li>
+            <li><a>Telephone: {{ productor.telephonemember }}</a></li>
+        </ul>
 
     </div>
     {% endfor %}

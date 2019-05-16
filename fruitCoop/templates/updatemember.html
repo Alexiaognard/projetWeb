@@ -1,7 +1,6 @@
 {% extends 'index.html' %}
 
 {% block content %}
-
 <div class="page">
   <div class = "formulaire">
     <div class="blocCentrer">
@@ -19,12 +18,7 @@
 
           <div class = "case">
             <label for="id_email">E-mail :</label>
-            <input type="email" value={{ member.nummember.email }} name="email" required id="id_email">
-          </div>
-
-          <div class = "case">
-            <label for="id_datenaissanceproducteur">Date de naissance :</label>
-            <input type="date" value="{{ date }}" name="datenaissanceproducteur" required id="id_datenaissanceproducteur">
+              <textarea type="text" class="materialize-textarea" name="email" required id="id_email">{{ member.nummember.email }}</textarea>
           </div>
 
           <div class = "case">
