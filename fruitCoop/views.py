@@ -4,6 +4,7 @@ from fruitCoop.forms import *
 from django.contrib.auth.models import *
 from fruitCoop.models import *
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage
 
 
 def homepage(request):
@@ -213,3 +214,40 @@ def update_myexport(request,numexport):
 
 
 
+#---------------- VIEWS DE RECHERCHE  ----------------
+
+@login_required
+def search(request, keyword=None, page=1):
+    #keyword et page sont utilisé lorsque l'utilisateur fait défiler les pages, par défaut ils valent respectivement None et 1
+    recherche = request.POST.get('recherche') #On récupère la recherche de l'utilisateur qui nous est envoyé en requete POST
+    if keyword is None : #Si la recherche est Vide
+        if not recherche:
+            return redirect('/') #Redirection vers la page d'accueil si aucun champ de recherche
+        else:
+            members = Member.objects.filter(firstnamemember__icontains=recherche)
+            if not members:
+                members_all = Member.objects.filter(lastnamemember__icontains=recherche)
+
+
+            member = pagination(members,page)
+            return render(request, 'search_members.html', locals())
+    else:
+
+        members = Member.objects.filter(firstnamemember__icontains=recherche)
+        if not members:
+            members_all = Member.objects.filter(lastnamemember__icontains=recherche)
+
+        recherche=keyword #On passe la recherche à travers les différentes pages de la pagination
+
+        member = pagination(members, page)
+        return render(request, 'search_members.html', locals())
+
+
+def pagination(liste,nb_page):
+    paginator = Paginator(liste, 2)  # On affiche 2 produit par page
+    try:
+        member = paginator.page(nb_page)
+    except EmptyPage:
+        member = paginator.page(paginator.num_pages)
+
+    return member

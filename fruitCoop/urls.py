@@ -18,6 +18,8 @@ urlpatterns = [
     path('read_memberbyroom', views.read_memberbyroom, name='read_memberbyroom'),
     path('update_member', views.update_member, name='update_member'),
     path('addRoom', views.addroom, name='addRoom'),
+    path('search/', views.search, name="search"),
+    path('search/<str:keyword>/<int:page>', views.search, name="search"),
 
 
 ]

@@ -33,16 +33,16 @@
                 <li class="tab"><a href="{% url 'rooms' %}">Les locaux</a></li>
                 <li class="tab"><a href="{% url 'myslot' %}" >Mes créneaux horaires</a></li>
                 <li class="tab"><a href="{% url 'myexport' %}">Mes exportations</a></li>
-                <li class="tab">
-                    <form method="post"  action="">
-				    {% csrf_token %}
-				        <div class="input-field">
-				            <input id="search" placeholder="Rechercher un producteur" name="recherche" type="text">
-				        </div>
-
-			        </form>
-                </li>
             </ul>
+            <div class="nav-wrapper">
+			  <form method="post"  action="{% url 'search' %}">
+				{% csrf_token %}
+				<div class="input-field">
+				  <input id="search" placeholder="Rechercher un producteur" name="recherche" type="text">
+				</div>
+				  <button type="submit" class="btn-flat" name="action"><i class="material-icons">search</i></button>
+			  </form>
+			</div>
         </div>
         {% endif %}
     </nav>
