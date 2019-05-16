@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col s12 m5">
         <div class="wrap_content">
-            <a href="" class="waves-effect waves-light btn-large green darken-3">Ajouter une exportation</a>
+            <a href="{% url 'create_export' %}" class="waves-effect waves-light btn-large green darken-3">Ajouter une exportation</a>
         </div>
     </div>
 
@@ -22,13 +22,13 @@
     </thead>
 
     <tbody>
-    {% for export in exports %}
+    {% for exp in listExport %}
     <tr>
-        <td>{{ export.dateexport }}</td>
-        <td>{{ export.fruitexport }}</td>
-        <td>{{ export.sizeexport }}</td>
-        <td>{{ export.nbpalletexport }}</td>
-        <td><a href="#"class="waves-effect btn-floating grey"><i class="material-icons">visibility</i></a></td>
+        <td>{{ exp.dateexport }}</td>
+        <td>{{ exp.fruitexport }}</td>
+        <td>{{ exp.sizeexport }}</td>
+        <td>{{ exp.nbpalletexport }}</td>
+        <td><a href=" {% url 'update_myexport' exp.numexport %}" class="waves-effect btn-floating grey"><i class="material-icons">edit</i></a></td>
     </tr>
     {% endfor %}
     </tbody>

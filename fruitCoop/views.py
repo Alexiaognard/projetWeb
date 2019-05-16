@@ -13,25 +13,6 @@ def homepage(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
-@login_required
-def addroom(request):
-    utilisateur = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=utilisateur)
-    if request.method == 'POST':
-        form = addRoomForm(request.POST)
-        if form.is_valid():
-            appartient=Appartenir(nummember=member, numroom=form.cleaned_data.get('choice_room'))
-            appartient.save()
-
-            return render(request, 'dashboard.html')
-        print('form pas valide')
-    else:
-        print('méthode pas valide')
-        form= addRoomForm()
-    return render(request, 'addroom.html', {'formAddRoom' : form})
-
-
-
 
 
 
@@ -110,7 +91,11 @@ def read_myaccount(request):
 def read_myexport(request):
     user = User.objects.get(id=request.user.id)
     member = Member.objects.get(nummember=user)
-    exports = Exporter.objects.filter(nummember=member)
+    export = Exporter.objects.filter(nummember=member)
+    listExport=[]
+    for exports in export:
+        listExport.append(exports.numexport)
+
     return render(request, 'myexport.html', locals())
 
 @login_required
@@ -133,7 +118,6 @@ def read_rooms(request):
     listRoom=[]
     for rooms in room:
         listRoom.append(rooms)
-        print(listRoom)
     return render(request, 'readrooms.html', locals())
 
 @login_required
@@ -149,6 +133,43 @@ def read_memberbyroom(request):
         listMember.append(mem.nummember)
 
     return render(request, 'read_memberbyroom.html', locals())
+
+
+
+#---------------- VIEWS DE CREATION ----------------
+
+
+@login_required
+def addroom(request):
+    utilisateur = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=utilisateur)
+    if request.method == 'POST':
+        form = addRoomForm(request.POST)
+        if form.is_valid():
+            appartient=Appartenir(nummember=member, numroom=form.cleaned_data.get('choice_room'))
+            appartient.save()
+
+            return render(request, 'dashboard.html')
+    else:
+        form= addRoomForm()
+    return render(request, 'addroom.html', {'formAddRoom' : form})
+
+
+@login_required
+def create_export(request):
+    utilisateur = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=utilisateur)
+    if request.method == 'POST':
+        form = CreateExportForm(request.POST)
+        if form.is_valid():
+            exportation=Export(dateexport=form.cleaned_data.get('dateexport'),fruitexport=form.cleaned_data.get('fruitexport'),sizeexport=form.cleaned_data.get('sizeexport'),nbpalletexport=form.cleaned_data.get('nbpalletexport'))
+            exportation.save()
+            exporter=Exporter(nummember=member,numexport=exportation)
+            exporter.save()
+
+            return render(request, 'myexport.html')
+    form = CreateExportForm()
+    return render(request, 'create_export.html', {'formCreateExport':form})
 
 
 #---------------- VIEWS DE MODIFICATION  ----------------
@@ -174,6 +195,21 @@ def update_member(request):
             return read_myaccount(request)
 
     return render(request, 'updatemember.html')
+
+@login_required
+def update_myexport(request,numexport):
+    export=Export.objects.get(numexport=numexport)
+    if request.method == "POST":
+        form = UpdateExportForm(request.POST)
+        if form.is_valid():
+            export.dateexport = form.cleaned_data.get('dateexport')
+            export.fruitexport = form.cleaned_data.get('fruitexport')
+            export.sizeexport = form.cleaned_data.get('sizeexport')
+            export.nbpalletexport = form.cleaned_data.get('nbpalletexport')
+            export.save()
+            return render(request, 'myexport.html')
+
+    return render(request, 'update_myexport.html')
 
 
 

@@ -36,8 +36,8 @@ class Room(models.Model):
 
 
 class Export(models.Model):
-    numexport = models.IntegerField(primary_key=True)
-    dateexport = models.DateField()
+    numexport = models.AutoField(primary_key=True)
+    dateexport = models.DateField('date export')
     fruitexport = models.CharField(max_length=20)
     sizeexport = models.IntegerField(blank=False)
     nbpalletexport = models.IntegerField(blank=False)
@@ -72,7 +72,6 @@ class Exportform(models.Model):
 class Remplir(models.Model):
     nummember = models.ForeignKey(Member, on_delete=models.CASCADE, db_column='nummember')
     numexportform = models.ForeignKey(Exportform, on_delete=models.CASCADE, db_column='numexportform')
-    datecoliser = models.DateTimeField()
 
     class Meta:
         db_table = 'remplir'
@@ -93,6 +92,7 @@ class Exporter(models.Model):
     class Meta:
         db_table = 'exporter'
         unique_together = ('numexport', 'nummember')
+
 
 
 

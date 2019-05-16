@@ -53,4 +53,19 @@ class UpdateMemberForm(forms.Form):
 class addRoomForm(forms.Form):
     choice_room = RoomChoiceField(queryset=Room.objects.all(), to_field_name='numroom', label="Local")
 
+class CreateExportForm(forms.Form):
+    dateexport = forms.DateField(label="Date d'exportation",widget=forms.SelectDateWidget(years=range(2019, 2100)))
+    fruitexport = forms.CharField(label="Fruit exporté")
+    sizeexport = forms.IntegerField(label="Calibre exporté")
+    nbpalletexport = forms.IntegerField(label="Nombre de palettes exportées")
+    class Meta:
+        model = Export
+        fields = ('dateexport','fruitexport','sizeexport','nbpalletexport')
+
+
+class UpdateExportForm(forms.Form):
+    dateexport = forms.DateField(label="Date d'exportation",widget=forms.SelectDateWidget(years=range(2019, 2100)))
+    fruitexport = forms.CharField(label="Fruit exporté")
+    sizeexport = forms.IntegerField(label="Calibre exporté")
+    nbpalletexport = forms.IntegerField(label="Nombre de palettes exportées")
 
