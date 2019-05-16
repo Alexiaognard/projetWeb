@@ -14,7 +14,8 @@
 </head>
 <body>
     <nav class="nav-extended">
-        <div class="nav-wrapper amber">
+        <div class="nav-wrapper amber ">
+
             <a href="{% url 'dashboard' %}" class="brand-logo center">fruitCoop</a>
             <a href="#" data-target="mobile-demo" class="waves-effect waves-light sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -23,12 +24,34 @@
                 <li><a href="{% url 'logout' %}" class="tooltipped" data-position="left" data-tooltip="Deconnexion" ><i class="material-icons">exit_to_app</i></a></li>
                 {% else %}
                 <li><a href="{% url 'login' %}"class="tooltipped" data-position="right" data-tooltip="Connexion"><i class="material-icons">person_outline</i></a></li>
+                <li></li>
                 {% endif %}
             </ul>
         </div>
+        {% if user.is_authenticated %}
+        <div class="nav-content amber lighten-1">
+            <ul class="tabs tabs-transparent">
+                <li class="tab"><a href="{% url 'myroom' %}">Mon local</a></li>
+                <li class="tab"><a href="{% url 'myslot' %}" >Mes créneaux horaires</a></li>
+                <li class="tab"><a href="{% url 'myexport' %}">Mes exportations</a></li>
+                <li class="tab">
+                    <form method="post"  action="">
+				    {% csrf_token %}
+				        <div class="input-field">
+				            <input id="search" placeholder="Rechercher un producteur" name="recherche" type="text">
+				        </div>
+
+			        </form>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
     </nav>
      <ul class="sidenav" id="mobile-demo">
         <li><a href="{% url 'dashboard' %}"><i class="material-icons">home</i>Accueil</a></li>
+         <li><a href="{% url 'myroom' %}">Mon local</a></li>
+         <li><a href="{% url 'myslot' %}" >Mes créneaux horaires</a></li>
+         <li><a href="{% url 'myexport' %}">Mes exportations</a></li>
      </ul>
 {% block content %}
 

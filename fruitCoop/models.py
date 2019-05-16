@@ -10,6 +10,8 @@ BOOLEAN_CHOICES = (
 
 class Member(models.Model):
     nummember = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    firstnamemember = models.CharField(blank=False, max_length=50)
+    lastnamemember = models.CharField(blank=False, max_length=50)
     birthdaydatemember = models.DateField()
     telephonemember = models.CharField(blank=False, max_length=15)
     postalcodemember = models.IntegerField(blank=False)
@@ -22,12 +24,12 @@ class Member(models.Model):
 
 class Room(models.Model):
     numroom = models.IntegerField(primary_key=True)
+    nameroom = models.CharField(blank=False, max_length=30)
     postalcoderoom = models.IntegerField(blank=False)
     cityroom = models.CharField(blank=False, max_length=30)
     address1room = models.CharField(blank=False, max_length=40)
     address2room = models.CharField(blank=True, max_length=40)
     capacityroom = models.IntegerField(blank=False)
-    responsible = models.ForeignKey(Member, on_delete=models.CASCADE)
     class Meta:
         db_table = 'room'
 
@@ -67,22 +69,21 @@ class Exportform(models.Model):
         db_table = 'exportform'
 
 
-class Coliser(models.Model):
-    numroom = models.ForeignKey(Room, on_delete=models.CASCADE, db_column='numroom')
-    numexport = models.ForeignKey(Export, on_delete=models.CASCADE, db_column='numexport')
+class Remplir(models.Model):
+    nummember = models.ForeignKey(Member, on_delete=models.CASCADE, db_column='nummember')
+    numexportform = models.ForeignKey(Exportform, on_delete=models.CASCADE, db_column='numexportform')
     datecoliser = models.DateTimeField()
 
     class Meta:
-        db_table = 'coliser'
-        unique_together = ('numroom', 'numexport')
+        db_table = 'remplir'
+        unique_together = ('nummember', 'numexportform')
 
-class Affecter(models.Model):
+class Appartenir(models.Model):
     numroom = models.ForeignKey(Room, on_delete=models.CASCADE, db_column='numroom')
     nummember = models.ForeignKey(Member, on_delete=models.CASCADE, db_column='nummember')
-    isResponsible = models.BooleanField(choices=BOOLEAN_CHOICES)
 
     class Meta:
-        db_table = 'affecter'
+        db_table = 'appartenir'
         unique_together = ('numroom', 'nummember')
 
 class Exporter(models.Model):
@@ -90,7 +91,7 @@ class Exporter(models.Model):
     nummember = models.ForeignKey(Member, on_delete=models.CASCADE, db_column='nummember')
 
     class Meta:
-        db_table = 'affecter'
+        db_table = 'exporter'
         unique_together = ('numexport', 'nummember')
 
 

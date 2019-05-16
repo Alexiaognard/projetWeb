@@ -9,6 +9,12 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
     return render(request, 'homepage.html')
 
+@login_required
+def dashboard(request):
+    user = User.objects.get(id=request.user.id)
+    return render(request, 'dashboard.html', locals())
+
+
 #---------------- VIEWS DE CONNEXION, DECONNEXION  ----------------
 
 
@@ -36,11 +42,6 @@ def logout_user(request):
     logout(request)
     return render(request, 'homepage.html')
 
-@login_required
-def read_myaccount(request):
-    utilisateur = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=request.user.id)
-    return render(request, 'myaccount.html',locals())
 
 #Creation d'un compte producteur
 def signup_producteur(request):
@@ -54,7 +55,6 @@ def signup_producteur(request):
             Utilisateur = User.objects.get(username=username)
             producteur = Member(nummember=Utilisateur, birthdaydatemember=form.cleaned_data.get('datenaissanceproducteur'), telephonemember=form.cleaned_data.get('telephoneproducteur'), postalcodemember=form.cleaned_data.get('codepostalproducteur'), citymember=form.cleaned_data.get('villeproducteur'), address1member=form.cleaned_data.get('adresse1producteur'), address2member=form.cleaned_data.get('adresse2producteur'), nummember_id=Utilisateur.id)
             producteur.save()  # Sauvegarde du client
-            local = Affecter(nummember=Utilisateur)
             login(request, user) #Connexion au site
             estProducteur = True
             request.session['estProducteur'] = estProducteur  # On mémorise le fait que c'est un producteur en session
@@ -63,12 +63,17 @@ def signup_producteur(request):
         form = SignUpFormMember(request.POST)
     return render(request, 'signup_producteur.html', {'formProducteur': form})
 
-@login_required
-def dashboard(request):
-    return render(request, 'dashboard.html')
+
 
 
 #---------------- VIEWS DE LECTURE  ----------------
+
+
+@login_required
+def read_myaccount(request):
+    utilisateur = User.objects.get(id=request.user.id)
+    member = Member.objects.get(nummember=request.user.id)
+    return render(request, 'myaccount.html',locals())
 
 
 @login_required
@@ -101,3 +106,6 @@ def read_memberbyroom(request):
     numroom = Room.objects.filter(numroom=room)
     listMember = Affecter.objects.filter(numroom=numroom)
     return render(request, 'read_memberbyroom.html', locals())
+
+
+

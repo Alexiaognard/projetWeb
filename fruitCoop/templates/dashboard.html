@@ -3,9 +3,9 @@
 {% block content %}
 <body>
     <div class="block center">
-        <h5>Que voulez vous faire ? </h5>
+        <h5>Bienvenue {{user.first_name}} {{user.last_name}}</h5>
         <div class="col s12 m5">
-            <a href="{% url 'myroom' %}" class="waves-effect waves-light btn-large green darken-3">Mon local</a>
+
             <a href="{% url 'myaccount' %}" class="waves-effect waves-light btn-large green darken-3">Mes infos</a>
         </div>
         <div class="col s12 m5">
