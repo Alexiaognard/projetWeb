@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'projetWeb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fruitcoop',
+        'NAME': 'sitecoop',
         'USER': '',
         'PASSWORD': '',
         'HOST':'',

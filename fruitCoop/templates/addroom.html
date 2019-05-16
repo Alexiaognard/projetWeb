@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block title %}Affectation à un local{% endblock %}
+{% block content %}
+<div class="page">
+  <div class = "formulaire">
+    <div class="blocCentrer">
+      <form method="post" action="">
+      {% csrf_token %}
+          {% for field in formAddRoom %}
+              {% for error in field.errors %}
+              <div class="textError">
+                <p>{{ error }}</p>
+              </div>
+              {% endfor %}
+              <div class = "case">
+                {{ field.label_tag }}
+                {{ field }}
+              {% if field.help_text %}
+                <small>{{ field.help_text }}</small>
+              {% endif %}
+              </div>
+          {% endfor %}
+          <div class="boutonForm">
+            <button class="btn teal" type="submit" >Ajouter un local</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
