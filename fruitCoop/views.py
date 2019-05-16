@@ -15,25 +15,25 @@ def dashboard(request):
 
 @login_required
 def addroom(request):
-    user = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=request.user.id)
-    room = Appartenir.objects.filter(nummember=member.nummember)
-    myroom=[]
-    for rooms in room:
-       myroom.append(rooms)
-    if myroom==[]:
+    username = User.objects.get(id=request.user.id)
+    user = Member.objects.get(nummember=username)
+    if request.method == 'POST':
+        form = addRoomForm(request.POST)
+        if form.is_valid():
+            room=form.cleaned_data.get('choice_room')
+            myroom=Room.objects.get(nameroom='room')
+            appartient=Appartenir(nummember=user.nummember, numroom=myroom.numroom)
+            appartient.save()
+            if user:
+                login(request,user)
 
-        if request.method == 'POST':
-            form = addRoomForm(request.POST)
-            if form.is_valid():
-                nameroom= form.cleaned_data('nameroom')
-                room=Room.objects.get(nameroom=nameroom)
-                appartient=Appartenir(nummember=member.nummember,numroom=room.numroom)
-                appartient.save()
                 return redirect('dashboard')
-        else:
-            form=addRoomForm()
-    return render(request, 'addroom.html', {'formAddRoom': form})
+            else:
+                error=True
+                #ErrorMessage = "Username ou mot de passe incorrect"
+    else:
+        form= SignInForm()
+    return render (request, 'addroom.html', locals())
 
 
 
@@ -90,7 +90,7 @@ def signup_producteur(request):
             estProducteur = True
 
             request.session['estProducteur'] = estProducteur  # On mémorise le fait que c'est un producteur en session
-            return render(request, 'homepage.html')
+            return render(request, 'dashboard.html')
     else:
         form = SignUpFormMember(request.POST)
     return render(request, 'signup_producteur.html', {'formProducteur': form})
@@ -104,7 +104,7 @@ def signup_producteur(request):
 @login_required
 def read_myaccount(request):
     utilisateur = User.objects.get(id=request.user.id)
-    member = Member.objects.get(nummember=request.user.id)
+    member = Member.objects.get(nummember=utilisateur)
     return render(request, 'myaccount.html',locals())
 
 

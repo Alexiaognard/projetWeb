@@ -1,1 +1,1 @@
-gunicorn siteCoop.wsgi
+web: gunicorn projetWeb.wsgi --log-file -
