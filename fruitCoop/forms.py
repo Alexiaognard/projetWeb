@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelChoiceField
 from fruitCoop.models import *
-
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 #Formulaire pour la connexion au site
 class SignInForm(forms.Form):
@@ -22,34 +22,25 @@ class SignUpFormMember(UserCreationForm):
     villeproducteur= forms.CharField(label="Ville")
     adresse1producteur = forms.CharField(label="Adresse1")
     adresse2producteur = forms.CharField(label="Adresse2 (Mettre un espace si le champs est vide)")
+    photomember = forms.ImageField(label='Votre photo')
 
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'datenaissanceproducteur', 'email', 'telephoneproducteur',
-                      'codepostalproducteur', 'villeproducteur', 'adresse1producteur', 'adresse2producteur','password1', 'password2')
-
-class CreateSlotForm(forms.Form):
-    begindateslot = forms.DateTimeField(label="date et heure de debut",widget=forms.SelectDateWidget(years=range(1900, 2100)))
-    enddateslot = forms.DateTimeField(label="date et heure de fin",widget=forms.SelectDateWidget(years=range(1900, 2100)))
-    nbpalletslot = forms.IntegerField(label="Nombre de palettes prévues")
-    fruitslot = forms.CharField(label="Fruit à exporter")
-
-    class Meta:
-        model = Slot
-        fields = ('begindateslot', 'enddateslot', 'nbpalletslot', 'fruitslot' )
+                      'codepostalproducteur', 'villeproducteur', 'adresse1producteur', 'adresse2producteur','photomember','password1', 'password2')
 
 
 class UpdateMemberForm(forms.Form):
     first_name = forms.CharField(label = "Prénom")
     last_name = forms.CharField(label = "Nom")
     email = forms.EmailField(label = "Adresse électronique")
-    datenaissanceproducteur = forms.DateField(label="Date de naissance",widget=forms.SelectDateWidget(years=range(1900, 2100)))
     telephoneproducteur = forms.CharField(label="Numéro de téléphone")
     codepostalproducteur = forms.IntegerField(label="Code postal")
     villeproducteur = forms.CharField(label="Ville")
     adresse1producteur = forms.CharField(label="Adresse1")
     adresse2producteur = forms.CharField(label="Adresse2")
+    photomember = forms.ImageField(label="Votre photo")
 
 class addRoomForm(forms.Form):
     choice_room = RoomChoiceField(queryset=Room.objects.all(), to_field_name='numroom', label="Local")
@@ -59,14 +50,37 @@ class CreateExportForm(forms.Form):
     fruitexport = forms.CharField(label="Fruit exporté")
     sizeexport = forms.IntegerField(label="Calibre exporté")
     nbpalletexport = forms.IntegerField(label="Nombre de palettes exportées")
+    numexportform = forms.IntegerField(label="Numéro de fiche d'exportation")
     class Meta:
         model = Export
-        fields = ('dateexport','fruitexport','sizeexport','nbpalletexport')
+        fields = ('numexportform','dateexport','fruitexport','sizeexport','nbpalletexport')
 
 
 class UpdateExportForm(forms.Form):
-    dateexport = forms.DateField(label="Date d'exportation",widget=forms.SelectDateWidget(years=range(2019, 2100)))
+
     fruitexport = forms.CharField(label="Fruit exporté")
     sizeexport = forms.IntegerField(label="Calibre exporté")
     nbpalletexport = forms.IntegerField(label="Nombre de palettes exportées")
+    numexportform = forms.IntegerField(label="Numéro de fiche d'exportation")
+
+
+class CreateFicheForm(forms.Form):
+    fruitform = forms.CharField(label="Fruit exporté")
+    nbfruitform = forms.IntegerField(label="Nombre de caisses")
+    parcelleform = forms.CharField(label="Numéro de parcelle")
+    brixform = forms.IntegerField(label="Brix")
+    maturityform = forms.CharField(label="Maturité des fruits")
+
+
+    class Meta:
+        model = Exportform
+        fields = ('fruitform', 'nbfruitform', 'parcelleform', 'brixform', 'maturityform')
+
+
+class UpdateFicheForm(forms.Form):
+    fruitform = forms.CharField(label="Fruit exporté")
+    nbfruitform = forms.IntegerField(label="Nombre de caisses")
+    parcelleform = forms.CharField(label="Numéro de parcelle")
+    brixform = forms.IntegerField(label="Brix")
+    maturityform = forms.CharField(label="Maturité des fruits")
 

@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m5">
+        <div class="wrap_content">
+            <a href="{% url 'create_exportform' %}" class="waves-effect waves-light btn-large green darken-3">Ajouter une fiche d'exportation</a>
+        </div>
+    </div>
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Numéro de fiche d'exportation</th>
+        <th>Fruit</th>
+        <th>Nombre de caisses</th>
+        <th>Brix</th>
+        <th>Parcelle</th>
+        <th>Maturité</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for fiche in listFiche %}
+    <tr>
+        <td>{{ fiche.numform }}</td>
+        <td>{{ fiche.fruitform }}</td>
+        <td>{{ fiche.nbfruitform }}</td>
+        <td>{{ fiche.brixform }}</td>
+        <td>{{ fiche.parcelleform }}</td>
+        <td>{{ fiche.maturityform }}</td>
+        <td><a href="{% url 'update_exportform' fiche.numform %}" class="waves-effect btn-floating grey"><i class="material-icons">edit</i></a><a href="{% url 'delete_exportform' fiche.numform %}" class="waves-effect btn-floating red"><i class="material-icons">delete</i></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

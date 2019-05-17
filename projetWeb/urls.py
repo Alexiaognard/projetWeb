@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from fruitCoop import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('fruitCoop/', include('fruitCoop.urls')),
+    path('', views.homepage, name='homepage'),
+    path('signup', views.signup_producteur, name='signupProducteur'),
+    path('login', views.login_user, name='login'),
+    path('logout', views.logout_user, name='logout'),
+
+    path('gestion/', include('fruitCoop.urls')),
 
 ]

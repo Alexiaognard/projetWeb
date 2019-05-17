@@ -1,13 +1,12 @@
 {% extends 'index.html' %}
 
-{% block title %}Création d'une exportation{% endblock %}
 {% block content %}
 <div class="page">
   <div class = "formulaire">
     <div class="blocCentrer">
-      <form method="post" action="">
+      <form enctype="multipart/form-data" method="post" action="">
       {% csrf_token %}
-          {% for field in formCreateExport %}
+          {% for field in formProducteur %}
               {% for error in field.errors %}
               <div class="textError">
                 <p>{{ error }}</p>
@@ -22,7 +21,7 @@
               </div>
           {% endfor %}
           <div class="boutonForm">
-            <button class="btn teal" type="submit" >Créer une exportation</button>
+            <button class="btn teal" type="submit" >Modifier mon compte</button>
           </div>
       </form>
     </div>

@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+{% load static %}
 <head>
     <meta charset="UTF-8">
 
       <!-- CSS  -->
-    {% load static %}
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="{% static 'css/style_fruitCoop.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 
 
 </head>
 <body>
+    <img class="responsive-img" src="{% static 'media/fruit.jpg' %}">
     <nav class="nav-extended">
         <div class="nav-wrapper amber ">
-
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <a href="{% url 'dashboard' %}" class="brand-logo center">fruitCoop</a>
-            <a href="#" data-target="mobile-demo" class="waves-effect waves-light sidenav-trigger"><i class="material-icons">menu</i></a>
+
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 {% if user.is_authenticated %}
                 <li><a href="{% url 'myaccount' %}" class="tooltipped" data-position="left" data-tooltip="Mon Compte" ><i class="material-icons">account_circle</i></a></li>
@@ -31,27 +33,37 @@
         <div class="nav-content amber lighten-1">
             <ul class="tabs tabs-transparent">
                 <li class="tab"><a href="{% url 'rooms' %}">Les locaux</a></li>
-                <li class="tab"><a href="{% url 'myslot' %}" >Mes créneaux horaires</a></li>
                 <li class="tab"><a href="{% url 'myexport' %}">Mes exportations</a></li>
+                <li class="tab"><a href="{% url 'read_exportform' %}">Mes fiches d'exportations</a></li>
+
+
             </ul>
             <div class="nav-wrapper">
-			  <form method="post"  action="{% url 'search' %}">
-				{% csrf_token %}
-				<div class="input-field">
-				  <input id="search" placeholder="Rechercher un producteur" name="recherche" type="text">
-				</div>
-				  <button type="submit" class="btn-flat" name="action"><i class="material-icons">search</i></button>
-			  </form>
-			</div>
+			            <form method="post"  action="search">
+                            {% csrf_token %}
+				            <div class="input-field">
+				                <input id="recherche" placeholder="Rechercher un producteur" name="recherche" type="text">
+                            </div>
+				            <button type="submit" class="btn-flat" name="action"><i class="material-icons">search</i></button>
+			             </form>
+			        </div>
         </div>
         {% endif %}
     </nav>
-     <ul class="sidenav" id="mobile-demo">
+     <ul id="slide-out" class="sidenav">
         <li><a href="{% url 'dashboard' %}"><i class="material-icons">home</i>Accueil</a></li>
          <li><a href="{% url 'rooms' %}">Les locaux</a></li>
-         <li><a href="{% url 'myslot' %}" >Mes créneaux horaires</a></li>
          <li><a href="{% url 'myexport' %}">Mes exportations</a></li>
+         <li><a href="{% url 'read_exportform' %}">Mes fiches d'exportations</a></li>
+         {% if user.is_authenticated %}
+            <li><a href="{% url 'myaccount' %}" class="tooltipped" data-position="left" data-tooltip="Mon Compte" >Mon compte</a></li>
+            <li><a href="{% url 'logout' %}" class="tooltipped" data-position="left" data-tooltip="Deconnexion" >Me déconnecter</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}"class="tooltipped" data-position="right" data-tooltip="Connexion">Me connecter</a></li>
+            <li></li>
+        {% endif %}
      </ul>
+
 {% block content %}
 
 {% endblock %}
@@ -61,7 +73,7 @@
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <span><p>Copyright 2019 <i class="material-icons">copyright</i> </p></span>
+          <span><p>Copyright 2019 © </p></span>
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">fruitCoop</h5>
@@ -84,8 +96,8 @@
   </footer>
 
   <!--  Scripts-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{% static 'js/materialize.js' %}"></script>
-<script src="{% static 'js/style_fruitCoop.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./static/js/materialize.js"></script>
+    <script src="static/js/style_fruitCoop.js"></script>
 </body>
 </html>

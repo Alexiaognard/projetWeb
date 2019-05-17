@@ -4,22 +4,32 @@
 {% block content %}
 
 <div class="row">
-  <div class = "formulaire">
-    <div class="blocCentrer">
-      <form method="post" action="">
-      {% csrf_token %}
-      {% for field in form %}
-          <div>
-          {{ field.label_tag }}
-          {{ field }}
+    {% if error %}
+        <p><strong>Utilisateur inexistant ou mauvais de mot de passe.</strong></p>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <p><strong>Vous êtes connecté, {{ user.username }} !</strong></p>
+    {% else %}
+    <div class = "formulaire">
+        <div class="blocCentrer">
+          <form method="post" action="">
+
+          {% csrf_token %}
+
+          {% for field in form %}
+              <div>
+              {{ field.label_tag }}
+              {{ field }}
+              </div>
+          {% endfor %}
+
+          <div class="boutonForm">
+            <button class="btn green darken-3" type="submit">Me connecter</button>
           </div>
-      {% endfor %}
-      <div class="boutonForm">
-        <button class="btn green darken-3" type="submit">Me connecter</button>
-      </div>
-      </form>
-    </div>
+          </form>
+        </div>
   </div>
+    {% endif %}
 
 </div>
 

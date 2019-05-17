@@ -1,18 +1,56 @@
 {% extends 'index.html' %}
-
+{% load static %}
 {% block content %}
 <body>
     <div class="block center">
-        <h5>Bienvenue {{user.first_name}} {{user.last_name}}</h5>
-        <div class="col s12 m5">
 
-            <a href="{% url 'myaccount' %}" class="waves-effect waves-light btn-large green darken-3">Mes infos</a>
-        </div>
-        <div class="col s12 m5">
-        <a href="{% url 'myslot' %}" class="waves-effect waves-light btn-large green darken-3">Mes créneaux horaires</a>
-        <a href="{% url 'myexport' %}" class="waves-effect waves-light btn-large green darken-3">Mes exportations</a>
-        </div>
-    </div>
+            <h3>Bienvenue {{user.first_name}} {{user.last_name}}</h3>
+              <div class="row">
+                <div class="col s12 m3">
+                    <div class="card">
+                        <div class="card-image">
+                             <img src="{% static member.photomember.url %}" alt="Votre photo">
+                        </div>
+                         <div class="card-action">
+                        <a href="{% url 'myaccount' %}" class="waves-effect waves-light btn-large green darken-3">Mes infos</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m3">
+                    <div class="card">
+                        <div class="card-image">
+                             <img src="{% static '/media/local.jpg' %}" alt="Photo d'un local agricole">
+                        </div>
+                         <div class="card-action">
+                        <a href="{% url 'myroom' %}" class="waves-effect waves-light btn-large green darken-3">Mon local</a>
+                        </div>
+                    </div>
+                 </div>
+
+                  <div class="col s12 m3">
+                    <div class="card">
+                        <div class="card-image">
+                             <img src="{% static 'media/fiches.jpg' %}" alt="image d'un homme en train de remplir une fiche">
+                        </div>
+                         <div class="card-action">
+                        <a href="{% url 'read_exportform' %}" class="waves-effect btn-large green darken-3">Mes fiches d'exportations</a>
+                        </div>
+                    </div>
+                 </div>
+
+                <div class="col s12 m3">
+                        <div class="card">
+                            <div class="card-image">
+                                 <img src="{% static 'media/cagette.jpeg' %}" alt="image de palettes de fruits">
+                            </div>
+                             <div class="card-action">
+                            <a href="{% url 'myexport' %}" class="waves-effect waves-light btn-large green darken-3">Mes exportations</a>
+                            </div>
+                        </div>
+                     </div>
+              </div>
+
 
 </body>
 {% endblock %}

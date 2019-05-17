@@ -1,14 +1,11 @@
-  body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+/* Concernant la barre de navigation */
 
-  main {
-    flex: 1 0 auto;
-  }
 
- .formulaire {
+.nav-wrapper form {
+	display: flex;
+}
+
+.formulaire {
   justify-content:center;
   display: flex;
   border-radius : 50px;
@@ -16,12 +13,39 @@
   border-width : 5px;
 }
 
+
+
 .blocCentrer {
   position: center;
   border: 5px double;
   border-color: #CEC8E0;
   padding: 50px;
   border-radius : 50px;
+}
+
+.case {
+  position: center;
+  border: 2px ridge;
+  border-color: #DFC5FC;
+  padding: 25px;
+  padding-top:7px;
+  padding-bottom: 7px;
+  margin : 40px;
+  margin-top:0px;
+  border-radius : 25px;
+}
+
+.page {
+  margin-left : 27%;
+  margin-right : 27%;
+  margin-top : 7%;
+  margin-bottom : 7%;
+}
+
+.textError{
+  color : red;
+  font-size : 13px;
+  font-style : italic;
 }
 
 .boutonForm {
@@ -47,15 +71,46 @@
   font-weight : bold;
 
 }
+/* Recherche de produit */
 
 
-.case {
-  position: center;
-  border: 2px ridge;
-  border-color: #DFC5FC;
-  padding: 25px;
-  padding-top:7px;
-  padding-bottom: 7px;
-  margin : 40px;
-  margin-top:0px;
-  border-radius : 25px;
+.search_container {
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+
+
+
+.taille{
+  width: 300px;
+  height: 160px;
+}
+
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 992px) {
+  .pagination{
+  width: 50%;
+  }
+  .pagination li.prev,
+  .pagination li.next {
+    width: 10%;
+  }
+  .pagination li.pages {
+    width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .wrap_content{
+    flex-wrap:wrap;
+  }
+}
+
+.btn_ac {
+  margin-left: 97px;
+}
