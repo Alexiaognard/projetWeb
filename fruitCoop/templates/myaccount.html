@@ -8,11 +8,11 @@
             <li>Email : {{ utilisateur.email }}</li>
             <li>Téléphone : {{ member.telephonemember }}</li>
             <li>Date de naissance : {{ member.birthdaydatemember }}</li>
-            <li>Adresse : {{ member.address1member }} {{ member.address2member }}, {{ member.postalcodemember }} {{member.citymember }}</li>
+            <li>Adresse : {{ member.address1member }}, {{ member.address2member }} {{ member.postalcodemember }} {{member.citymember }}</li>
             <li>Mon local: {{room.numroom.nameroom}}</li>
         </ul>
         <div class="wrap_content">
-            <a href="{% url 'myroom' %}" class="waves-effect green darken-3">Mon local</a>
+            <a href="{% url 'myroom' %}" class="waves-effect btn-large green darken-3">Mon local</a>
             <a href="{% url 'update_member' %}" class="waves-effect btn-floating green darken-3"><i class="material-icons">edit</i></a>
             <a href="#" class="btn-floating red"><i class="material-icons">delete</i></a>
         </div>

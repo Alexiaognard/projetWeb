@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="page">
+  <div class = "formulaire">
+    <div class="blocCentrer">
+      <form method="post" action="">
+          {% csrf_token %}
+          <div class = "case">
+            <label for="id_fruit">Fruit :</label>
+            <textarea type="text" class="materialize-textarea" name="fruitexport" required id="id_fruit">{{ export.fruitexport }}</textarea>
+          </div>
+
+          <div class = "case">
+            <label for="id_size">Calibre :</label>
+            <textarea type="text" class="materialize-textarea" name="sizeexport" required id="id_size">{{ export.sizeexport }}</textarea>
+          </div>
+
+          <div class = "case">
+            <label for="id_nbpallet">Nombre de Palettes :</label>
+              <textarea type="text" class="materialize-textarea" name="nbpalletexport" required id="id_nbpallet">{{ export.nbpalletexport }}</textarea>
+          </div>
+
+          <div class = "case">
+            <label for="id_date">Date :</label>
+            <input type="date" class="materialize-textarea" name="dateexport" required id="id_date">{{ export.dateexport }}</input>
+          </div>
+
+        </div>
+
+
+          <div class="boutonForm">
+            <button class ="btn green darken-3" type="submit" >Modifier mon exportation</button>
+          </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,6 +1,9 @@
 from django.urls import path
 
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
@@ -20,6 +23,7 @@ urlpatterns = [
     path('addRoom', views.addroom, name='addRoom'),
     path('search/', views.search, name="search"),
     path('search/<str:keyword>/<int:page>', views.search, name="search"),
+    path('delete/export/<int:numexport>', views.delete_myexport, name="delete_export")
 
 
 ]

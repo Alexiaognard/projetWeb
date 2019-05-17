@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from fruitCoop.forms import *
 from django.contrib.auth.models import *
 from fruitCoop.models import *
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage
-
+from django.contrib.postgres import
 
 def homepage(request):
     return render(request, 'homepage.html')
@@ -31,7 +31,7 @@ def login_user(request):
             if user:
                 login(request,user)
 
-                return redirect('dashboard')
+                return dashboard(request)
             else:
                 error=True
                 #ErrorMessage = "Username ou mot de passe incorrect"
@@ -110,7 +110,8 @@ def read_myslot(request):
 def read_myroom(request):
     user = User.objects.get(id=request.user.id)
     member = Member.objects.get(nummember=user)
-    room = Appartenir.objects.filter(nummember=member)
+
+
     return render(request, 'read_myroom.html', locals())
 
 @login_required
@@ -168,18 +169,33 @@ def create_export(request):
             exporter=Exporter(nummember=member,numexport=exportation)
             exporter.save()
 
-            return render(request, 'myexport.html')
+            return read_myexport(request)
     form = CreateExportForm()
     return render(request, 'create_export.html', {'formCreateExport':form})
 
 
-#---------------- VIEWS DE MODIFICATION  ----------------
+#---------------- VIEWS DELETE  ----------------
+
+#permet de delete une exportation
+@login_required
+def delete_myexport(request, numexport):
+    export = get_object_or_404(Export, numexport=numexport)
+    if request.method == 'POST':
+        Export.objects.get(numexport = numexport).delete()
+        return read_myexport(request)
+
+    return render(request, 'deleteView.html')
+
+
+
+#---------------- VIEWS UPDATE  ----------------
 
 @login_required
 def update_member(request):
     user = User.objects.get(id=request.user.id)
+    print (user)
     member = Member.objects.get(nummember=request.user.id)
-    form=UpdateMemberForm()
+    print(member.nummember)
     if request.method == "POST":
         form = UpdateMemberForm(request.POST)
         if form.is_valid():
@@ -187,13 +203,14 @@ def update_member(request):
             user.last_name = form.cleaned_data.get('last_name')
             user.email = form.cleaned_data.get('email')
             user.save()
-            member.telephonemember = form.cleaned_data.get('telephoneproducteur')
-            member.postalcodemember = form.cleaned_data.get('codepostalproducteur')
-            member.citymember = form.cleaned_data.get('villeproducteur')
-            member.address1member = form.cleaned_data.get('adresse1producteur')
-            member.address2member = form.cleaned_data.get('adresse2producteur')
+            member.nummember.birthdaydatemember = form.cleaned_data.get('datenaissanceproducteur')
+            member.nummember.telephonemember = form.cleaned_data.get('telephoneproducteur')
+            member.nummember.postalcodemember = form.cleaned_data.get('codepostalproducteur')
+            member.nummember.citymember = form.cleaned_data.get('villeproducteur')
+            member.nummember.address1member = form.cleaned_data.get('adresse1producteur')
+            member.nummember.address2member = form.cleaned_data.get('adresse2producteur')
             member.save()
-            return read_myaccount(request)
+            return render(request, 'myaccount.html')
 
     return render(request, 'updatemember.html')
 
@@ -225,8 +242,11 @@ def search(request, keyword=None, page=1):
             return redirect('/') #Redirection vers la page d'accueil si aucun champ de recherche
         else:
             members = Member.objects.filter(firstnamemember__icontains=recherche)
+
+
             if not members:
                 members_all = Member.objects.filter(lastnamemember__icontains=recherche)
+
 
 
             member = pagination(members,page)
@@ -234,8 +254,10 @@ def search(request, keyword=None, page=1):
     else:
 
         members = Member.objects.filter(firstnamemember__icontains=recherche)
+
         if not members:
             members_all = Member.objects.filter(lastnamemember__icontains=recherche)
+
 
         recherche=keyword #On passe la recherche à travers les différentes pages de la pagination
 
@@ -251,3 +273,4 @@ def pagination(liste,nb_page):
         member = paginator.page(paginator.num_pages)
 
     return member
+

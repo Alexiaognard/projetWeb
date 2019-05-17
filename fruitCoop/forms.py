@@ -44,6 +44,7 @@ class UpdateMemberForm(forms.Form):
     first_name = forms.CharField(label = "Prénom")
     last_name = forms.CharField(label = "Nom")
     email = forms.EmailField(label = "Adresse électronique")
+    datenaissanceproducteur = forms.DateField(label="Date de naissance",widget=forms.SelectDateWidget(years=range(1900, 2100)))
     telephoneproducteur = forms.CharField(label="Numéro de téléphone")
     codepostalproducteur = forms.IntegerField(label="Code postal")
     villeproducteur = forms.CharField(label="Ville")

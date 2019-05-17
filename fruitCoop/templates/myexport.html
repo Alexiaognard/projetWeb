@@ -28,7 +28,7 @@
         <td>{{ exp.fruitexport }}</td>
         <td>{{ exp.sizeexport }}</td>
         <td>{{ exp.nbpalletexport }}</td>
-        <td><a href=" {% url 'update_myexport' exp.numexport %}" class="waves-effect btn-floating grey"><i class="material-icons">edit</i></a></td>
+        <td><a href=" {% url 'update_myexport' exp.numexport %}" class="waves-effect btn-floating grey"><i class="material-icons">edit</i></a><a href=" {% url 'delete_export' exp.numexport %}" class="waves-effect btn-floating red"><i class="material-icons">delete</i></a></td>
     </tr>
     {% endfor %}
     </tbody>
