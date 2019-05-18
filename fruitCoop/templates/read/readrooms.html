@@ -11,6 +11,7 @@
                         <li><a>Nom : {{ local.nameroom }}</a></li>
                         <li><a>Adresse : {{ local.address1room}}, {{ local.address2room}} {{ local.cityroom}} {{ local.postalcoderoom}}</a></li>
                         <li><a>Capacité : {{local.capacityroom }} palettes</a></li>
+                        <li><a href="{% url 'read_memberbyroom' local.numroom %}" class="btn green darken-3">Voir les producteurs</a></li>
                     </ul>
 
                 </div>

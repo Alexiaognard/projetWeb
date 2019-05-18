@@ -5,6 +5,8 @@ from django.contrib.auth.models import *
 from fruitCoop.models import *
 from django.core.paginator import Paginator, EmptyPage
 
+
+
 def homepage(request):
     return render(request, 'homepage.html')
 
@@ -162,16 +164,11 @@ def read_rooms(request):
     return render(request, 'read/readrooms.html', locals())
 
 
-def read_memberbyroom(request):
+def read_memberbyroom(request,numroom):
     if request.user.is_authenticated:
-        user = User.objects.get(id=request.user.id)
-        member = Member.objects.get(nummember=user)
-        room = Appartenir.objects.get(nummember=member)
-        prod = Appartenir.objects.filter(numroom=room.numroom.numroom)
+        prod = Appartenir.objects.filter(numroom=numroom)
         listMember = []
         for mem in prod:
-            utilisateur=User.objects.get(id=mem.nummember.nummember.id)
-            membre=Member.objects.get(nummember=utilisateur)
             listMember.append(mem.nummember)
     else:
         return redirect('homepage')
@@ -247,7 +244,7 @@ def create_exportform(request):
                 remplir=Remplir(nummember=member,numexportform=fiche)
                 remplir.save()
 
-                return redirect('read_exportform')
+                return read_exportform(request)
         form = CreateFicheForm()
     else:
         return redirect('homepage')
@@ -274,7 +271,7 @@ def delete_myexportform(request, numform):
         exportform = get_object_or_404(Exportform, numform=numform)
         if request.method == 'POST':
             Exportform.objects.get(numform = numform).delete()
-            return redirect('read/read_exportform')
+            return read_exportform(request)
     else:
         return redirect('homepage')
 
@@ -303,7 +300,7 @@ def update_member(request):
                 member.address2member = form.cleaned_data.get('adresse2producteur')
                 member.photomember = form.cleaned_data.get('photomember')
                 member.save()
-                return read_myaccount()
+                return read_myaccount(request)
         form = UpdateMemberForm()
     else:
         return redirect('homepage')

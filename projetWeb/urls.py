@@ -23,7 +23,7 @@ urlpatterns = [
     path('signup', views.signup_producteur, name='signupProducteur'),
     path('login', views.login_user, name='login'),
     path('logout', views.logout_user, name='logout'),
+    path('fruitCoop/', include('fruitCoop.urls')),
 
-    path('gestion/', include('fruitCoop.urls')),
 
 ]
