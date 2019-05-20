@@ -81,13 +81,14 @@ WSGI_APPLICATION = 'projetWeb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sitecoop',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST':'',
-        'PORT':'1234'
-
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'alexyab$fruitCoopdb',
+        'USER': 'alexyab',
+        'PASSWORD': 'sitecoop',
+        'HOST': 'alexyab.mysql.pythonanywhere-services.com',
+        'OPTIONS': {
+            'init_command': 'SET default_storage_engine=INNODB',
+        }
     }
 }
 
